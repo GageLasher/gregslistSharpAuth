@@ -1,4 +1,4 @@
- using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -39,9 +39,11 @@ namespace gregslistSharpAuth
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "gregslistSharpAuth", Version = "v1" });
             });
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
-            
+
             services.AddScoped<AccountsRepository>();
             services.AddScoped<AccountService>();
+            services.AddTransient<CarsRepository>();
+            services.AddTransient<CarsService>();
         }
 
         private void ConfigureCors(IServiceCollection services)
@@ -94,10 +96,10 @@ namespace gregslistSharpAuth
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();
